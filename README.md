@@ -225,3 +225,135 @@ Twitter.get('search/tweets', {
    console.log('data', result.data);
 });
 ```
+Now re-run your server.js file and check out the response in the console, and you should be able to see some tweets in the response.
+
+Each tweet comes with a lot of useful data, albeit some of it hidden within the console because they are further objects, but still really handy data. The most obvious pieces of data are the retweet_count and favorite_count.
+
+#### So, how do we make this user-friendly and ultimately digestible information?
+1. Add a single HTML input field to allow submission of hashtags to the backend.
+2. Configuring the server.js file to handle post data from the HTML form and use it within the API call.
+3. Return the response to our index file.
+4. Parse the data and build our beautiful HTML.
+Let’s go…
+
+### Adding an HTML form to the index.ejs file
+Add the following code to your index.ejs file, for quickness I’ve used the bootstrap and font awesome CDN.
+
+```html
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>Twitter Hashtag Viewer</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+        type="text/css">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        type="text/css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="form mb-2 mt-2"> 
+        <fieldset>
+            <form action="/" method="post">
+                <div class="input-group">
+                <input class="form-control" name="hashtag" placeholder="eg. #100DaysOfCode" required type="text">
+                <input type="submit" value="Analyze!">
+                </div>
+            </form>
+        </fieldset>
+    </div>   
+    </div>
+
+  </body>
+</html>
+```
+
+### Configuring Our server.js to handle Post requests
+#### Installing and configuring Body-parser
+Now we need to write the logic to handle the posting of input values into the form above. First of all, we need to install some middleware which will give us this functionality, namely body-parser. Body-parser has access to the req and res objects giving us the ability to interrogate what data is passed during the post.
+
+Run the following command to install it –
+
+``npm install body-parser --save``
+
+Then, at the top of your server.js file, require it, and lastly, tell the app to utilize its power.
+
+```javascript
+const bodyParser = require('body-parser')
+
+app.use(bodyParser.urlencoded({ extended: true }));
+```
+
+#### Adding our post handler
+Add the following JS to your server.js file which will handle a simple posting of the hashtag input form with the name ‘hashtag’.
+
+```javascript
+app.post('/', function (req, res) {
+  console.log(req.body.hashtag);
+  if (req.body.hashtag !== undefined) {
+    res.render('index',  {hashtag: req.body.hashtag})
+  }
+  res.render('index',  {hashtag: null})
+});
+```
+
+#### Adjusting the index file to print hashtag variable passed in from the post handler
+Add the following EJS markup to your index.ejs file, somewhere that you want the hashtag to print out after it’s been submitted to the server and returned as a variable.
+
+```ejs
+<% if(hashtag !== null){ %>
+        <h3>All popular tweets for <%- hashtag %></h3>
+    
+    <% } %>
+```
+Now, if you reboot your server, navigate to the index file and submit a new hashtag, you should see the value printed to the page! See below, we submitted the hashtag ‘code’
+[image]
+
+### Putting it all together and displaying tweets
+
+So, we’ve got our Twitter API client ready, the ability to post data from an HTML form, all is left to do is build the logic for the API call to include the hashtag and return data to the index file. Once that’s done, we can format the data to look good and digestible.
+
+The next pieces of code will need to be completely changed if you want to build more functionality into the project, but for now, it’s sole purpose is to handle hashtag inputs and query the Twitter API with them.
+
+Edit your server.js files post handler
+Adjust your Post handler to look the same as below, with your own API credentials –
+
+
+```javascript
+app.post('/', function (req, res) {
+
+  if (req.body.hashtag !== null) {
+
+      let Twitter = new twit({
+        consumer_key: 'your_consumer_key',
+        consumer_secret: 'your_consumer_secret',
+        access_token: 'your_access_token',
+        access_token_secret: 'your_access_token_secret',
+        timeout_ms: 60 * 1000, // optional HTTP request timeout to apply to all requests.
+        strictSSL: true, // optional - requires SSL certificates to be valid.
+    });
+
+    Twitter.get('search/tweets', {
+        q: req.body.hashtag, // use the user posted hashtag value as the query
+        count: 100,
+        result_type: "mixed" 
+
+    }).catch(function (err) {
+        console.log('caught error', err.stack)
+        res.render('index', {
+            hashtag: null,
+            twitterData: null,
+            error: err.stack
+        });
+    }).then(function (result) {
+      // Render the index page passing in the hashtag and the Twitter API results
+        res.render('index', {
+            hashtag: req.body.hashtag, 
+            twitterData: result.data,
+            error: null
+        });
+    });
+  }
+});
+```
