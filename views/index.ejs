@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Twitter Hashtag Viewer</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+        type="text/css">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        type="text/css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="form mb-2 mt-2"> 
+        <fieldset>
+            <form action="/" method="post">
+                <div class="input-group">
+                <input class="form-control" name="hashtag" placeholder="eg. #stayathome" required type="text">
+                <input type="submit" value="Analyze!">
+                </div>
+            </form>
+        </fieldset>
+    </div>   
+    
+
+    <div class="container-fluid">
+
+    </div>
+    <% if(hashtag !== null){ %>
+    <h3>All popular tweets for <%- hashtag %></h3>
+
+    <% } %>
+
+<div id="tweets"></div>
+
+    <% if(twitterData !== null){ %>
+
+       
+    <script>
+        let twitterData = <%- JSON.stringify(twitterData) %>;
+        let tweetHTML = '<div class="row">';
+        for (let index = 0; index < twitterData.statuses.length; index++) {
+            var createdDateTime = new Date(twitterData.statuses[index].created_at).toUTCString();
+
+            tweetHTML += '<div class="col-sm-4"><div class="card mb-3">' +
+                '<div class="card-body">' +
+                '<h5 class="card-title">@' + twitterData.statuses[index].user.screen_name + '</h5>' +
+                '<h6 class="card-subtitle mb-2 text-muted">' + twitterData.statuses[index].user.name + '</h6>' +
+                '<p class="card-text">' + twitterData.statuses[index].text + '<</p>' +
+                '<p class="card-text"><i class="fa fa-retweet" aria-hidden="true"></i> ' + twitterData.statuses[index].retweet_count + ' <i class="fa fa-heart" style="color:red;" aria-hidden="true"></i> ' + twitterData.statuses[index].favorite_count + '</p>' +
+                
+              //  '<a class="card-link" href="#">Another link</a>' +
+                '<p class="card-text"><small class="text-muted">Created on '+createdDateTime.toString()+' </small></p>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+        }
+        tweetHTML += '</div>';
+
+        var tweetsContainer = document.getElementById('tweets');
+        tweetsContainer.insertAdjacentHTML('beforeend', tweetHTML);
+    </script>
+    <% } %>
+
+
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>
