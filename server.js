@@ -7,18 +7,23 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Start serv & listen on port 3000.
 app.listen(3000, function () {
-  console.log('Node listening on port 3000')
+    console.log('Node listening on port 3000')
 })
 
 //Listen for get request on root url. eg. http://localhost:3000
 app.get('/', function (req, res) {
+    if (!req.body.hashtag || !req.body.twitterData) {
+        res.render('index', { hashtag: null, twitterData: null });
+    }
     res.render('index');
 })
 
 app.set('view engine', 'ejs')
 
 app.post('/', function (req, res) {
+
     if (req.body.hashtag !== null) {
+
         let Twitter = new twit({
             consumer_key: 'consumer_key',
             consumer_secret: 'consumer_secret',
