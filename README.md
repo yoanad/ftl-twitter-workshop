@@ -1,6 +1,36 @@
 # Workshop: View Tweets using the Twitter API
 ## Navigation
-1. [Prerequesites] (#Prerequesites)
+* [1. Prerequesites](##1.%20Prerequesites)
+
+* [2. Initial set up](##2.%20Initial%20set%20up)
+
+* [3. Installing & Configuring Twit](##3.%20Installing%20&%20Configuring%20Twit)
+
+* [4. Searching for some tweets](##4.%20Searching%20for%20some%20tweets)
+
+* [5. Adding an HTML form to the index.ejs file](##5.%20Adding%20an%20HTML%20form%20to%20the%20index.ejs%20file)
+
+* [6. Configuring our server.js to handle POST requests](##6.%20Configuring%20our%20server.js%20to%20handle%20POST%20requests)
+
+  * [6.1 Installing and configuring `body-parser`](###6.1%20Installing%20and%20configuring%20`body-parser`)
+
+  * [6.2 Adding our POST handler](###6.2%20Adding%20our%20POST%20handler)
+
+  * [6.3 Adjusting the index file to print hashtag variable passed in from the POST handler](###%206.3%20Adjusting%20the%20index%20file%20to%20print%20hashtag%20variable%20passed%20in%20from%20the%20POST%20handler)
+
+  * [6.4 Adjust your GET request](###%206.4%20Adjust%20your%20GET%20request)
+
+* [7. Putting it all together and displaying tweets](##%207.%20Putting%20it%20all%20together%20and%20displaying%20tweets)
+
+  * [7.1 Edit your server.js files POST handler](###%207.1%20Edit%20your%20server.js%20files%20POST%20handler)
+
+  * [7.2 Edit your index.ejs file to handle the Twitter Data](###%207.2%20Edit%20your%20index.ejs%20file%20to%20handle%20the%20Twitter%20Data)
+
+* [8. Summary](##%208.%20Summary)
+
+* [Confused?? We got you! ](##%20Confused??%20We%20got%20you!)
+
+* [##Next steps](##%20Next%20steps)
 
 ## 1. Prerequesites
 * Your own Twitter Developers Account (advised)
