@@ -284,7 +284,7 @@ Adjust your index.ejs file to look similar to below, which does the following:
 
 <div id="tweets"></div>
 
-    <% if(twitterData !== null){ %>
+    <% if(locals.twitterData){ %>
 
     <script>
         let twitterData = <%- JSON.stringify(twitterData) %>;
