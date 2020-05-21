@@ -71,6 +71,18 @@ If you don't have credentials, you need to create an app on Twitter Developer fi
 1. Navigate to `Apps` on the top right.
 2. Click on `Create new app` (top right).
 3. Fill out the required fields.
+   For *Description* you can write something like:
+
+   > I'm participating in FTL's first virtual Hackathon.
+   > We will introduce ourselves to Big Data, COVID-19 and other related datasets, and make sense of them!
+
+   For *Website URL* you can link our website for now(unless you have your own) https://bigdatahack.femaletechleaders.org/
+
+   For *Organization website URL* you can use https://femaletechleaders.org
+
+   For *App usage* you can write something like: 
+   > We want to use the API in a hackathon, in order to practice Big Data concepts and to analyze the global effects of Covid-19.
+
 4. Copy & generate `Consumer API keys` and `Access token & access token secret` to your app.
 
 ## 4. Searching for some tweets
