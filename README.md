@@ -27,21 +27,38 @@ Install Twit by running:
 
 ```npm install twit```
 
-Then, require the library in your server.js file by adding the following code near to the top of the file:
+Then, require the twit library in your server.js file by adding the following code near to the top of the file:
 
 
 ```javascript
 const twit = require("twit")
 ```
 
-Lastly, configure a new Twit instance with your API credentials:
+Create a `twitterConfig.js` file with the following contents:
 
 ```javascript
-let Twitter = new twit({
+const twitterConfig = {
         consumer_key: 'your_consumer_key',
         consumer_secret: 'your_consumer_secret',
         access_token: 'your_access_token',
         access_token_secret: 'your_access_token_secret',
+}
+module.exports = twitterConfig;
+```
+
+and require it in `server.js` and put it on the top of the file:
+```javascript
+const twitterConfig = require("./twitterConfig");
+```
+
+Lastly, configure a new Twit instance with your API credentials:
+
+```javascript
+let Twitter = new twit({
+        consumer_key: twitterConfig.consumer_key,
+        consumer_secret: twitterConfig.consumer_secret,
+        access_token: twitterConfig.access_token,
+        access_token_secret: twitterConfig.access_token_secret,
         timeout_ms: 60 * 1000, // optional HTTP request timeout to apply to all requests.
         strictSSL: true, // optional - requires SSL certificates to be valid.
     });
@@ -85,7 +102,7 @@ Let’s go…
 
 ## 5. Adding an HTML form to the index.ejs file
 
-Starting from line 15, replace 
+Starting from line 13, replace 
 ```html
 <p><%- welcomeMessage %></p>
 ```
@@ -150,6 +167,26 @@ Add the following EJS markup to your `index.ejs` file, somewhere that you want t
 <% } %>
 ```
 
+### 6.4 Adjust your GET request
+Replace the current 
+```javascript
+app.get('/', function (req, res) {
+    res.render('index',  {welcomeMessage: "Welcome to my app."})
+    
+})
+```
+
+with 
+
+```javascript
+app.get('/', function (req, res) {
+  if (!req.body.hashtag || !req.body.twitterData) {
+      res.render('index', { hashtag: null, twitterData: null });
+  }
+  res.render('index');
+})
+```
+
 Now, if you reboot your server, navigate to the index file and submit a new hashtag, you should see the value printed to the page! See below, we submitted the hashtag `bananabread`:
 ![bananabread](images/6.3.png)
 
@@ -157,6 +194,8 @@ Now, if you reboot your server, navigate to the index file and submit a new hash
 So, we’ve got our Twitter API client ready, the ability to post data from an HTML form, all is left to do is build the logic for the API call to include the hashtag and return data to the index file. Once that’s done, we can format the data to look good and digestible.
 
 The next pieces of code will need to be completely changed if you want to build more functionality into the project, but for now, it’s sole purpose is to handle hashtag inputs and query the Twitter API with them.
+
+
 
 ### 7.1 Edit your server.js files POST handler
 Adjust your Post handler to look the same as below, with your own API credentials:
@@ -167,10 +206,10 @@ app.post('/', function (req, res) {
   if (req.body.hashtag !== null) {
 
       let Twitter = new twit({
-        consumer_key: 'your_consumer_key',
-        consumer_secret: 'your_consumer_secret',
-        access_token: 'your_access_token',
-        access_token_secret: 'your_access_token_secret',
+        consumer_key: twitterConfig.consumer_key,
+        consumer_secret: twitterConfig.consumer_secret,
+        access_token: twitterConfig.access_token,
+        access_token_secret: twitterConfig.access_token_secret,
         timeout_ms: 60 * 1000, // optional HTTP request timeout to apply to all requests.
         strictSSL: true, // optional - requires SSL certificates to be valid.
     });
