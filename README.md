@@ -217,7 +217,7 @@ Let’s add the code to search tweets on Twitter, just after the Twit instance s
 ```javascript
 Twitter.get('search/tweets', {
   q: '#stayAtHome',
-  count: 100,
+  count: 3,
   result_type: "mixed" 
 }).catch(function (err) {
   console.log('caught error', err.stack)
@@ -262,7 +262,7 @@ Add the following code to your index.ejs file, for quickness I’ve used the boo
                 </div>
             </form>
         </fieldset>
-    </div>   
+    </div>
     </div>
 
   </body>
@@ -395,10 +395,9 @@ Adjust your index.ejs file to look similar to below, which does the following �
     <div class="container-fluid">
 
     </div>
-    <% if(hashtag !== null){ %>
-    <h3>All popular tweets for <%- hashtag %></h3>
-
-    <% } %>
+      <% if (locals.hashtag){ %>
+        <h3>All popular tweets for <%- hashtag %></h3>
+      <% } %>
 
 <div id="tweets"></div>
 
