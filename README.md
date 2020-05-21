@@ -327,3 +327,16 @@ This tutorial was designed to show you the basics of working with the Twitter AP
 ## Confused?? We got you! 
 Here's a repository with the whole setup (server + Twitter API) working:
 https://github.com/eharason/twitter-analysis 
+
+## Next steps
+Now that you can successfully display tweets on the browser, what else could you do?!
+
+- Ideas:
+  - Plot `#stayAtHome` hashtags on a map
+  - Compare hash tag sentiments by country
+  - Collection of data by a topic you are interested in
+  - Create data visualizations and reports
+
+*Feel free to ask the mentors if you have any questions!*
+
+Happy hacking!
