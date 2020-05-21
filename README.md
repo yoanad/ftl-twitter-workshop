@@ -32,7 +32,9 @@
 
 * [##Next steps](##%20Next%20steps)
 
-## 1. Prerequesites
+<!-- toc -->
+
+## 1.Prerequesites 
 * Your own Twitter Developers Account (advised)
 
 OR
