@@ -1,8 +1,11 @@
 # Workshop: View Tweets using the Twitter API
 ## Navigation
-1. [Prerequesites] (#Prerequesites)
+- [1. Prerequesites](##1.%20Prerequesites)
 
-## 1. Prerequesites
+<!-- toc -->
+
+### Example 1 Heading
+## 1.Prerequesites 
 * Your own Twitter Developers Account (advised)
 
 OR
