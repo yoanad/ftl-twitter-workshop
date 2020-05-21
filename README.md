@@ -200,7 +200,7 @@ The next pieces of code will need to be completely changed if you want to build 
 
 
 ### 7.1 Edit your server.js files POST handler
-Adjust your Post handler to look the same as below, with your own API credentials:
+Adjust your Post handler to look the same as below (you can just copy it!), with your own API credentials:
 
 ```javascript
 app.post('/', function (req, res) {
