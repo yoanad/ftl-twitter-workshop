@@ -3,7 +3,11 @@
 1. [Prerequesites] (#Prerequesites)
 
 ## 1. Prerequesites
-* A Twitter Developers Account
+* Your own Twitter Developers Account (advised)
+
+OR
+
+* Be part of the `FTL Hackathons Team` Twitter Developer Organization -> to become a part of the organization, send us your Twitter handle
 
 ## 2. Initial set up
 First, we have to install the dependancies of the project: 
