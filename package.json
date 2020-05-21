@@ -1,18 +1,29 @@
 {
-  "name": "twitter-analysis",
+  "name": "ftl-twitter-workshop",
   "version": "1.0.0",
-  "description": "",
+  "description": "ftl twitter analysis workshop",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yoanad/ftl-twitter-workshop.git"
+  },
+  "keywords": [
+    "twitter",
+    "javascript",
+    "nodejs",
+    "expressjs"
+  ],
+  "author": "FTL Hackathons",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yoanad/ftl-twitter-workshop/issues"
+  },
+  "homepage": "https://github.com/yoanad/ftl-twitter-workshop#readme",
   "dependencies": {
-    "body-parser": "^1.19.0",
     "ejs": "^3.1.3",
-    "express": "^4.17.1",
-    "ml-sentiment": "^2.0.7",
-    "twit": "^2.2.11"
+    "express": "^4.17.1"
   }
 }
