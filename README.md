@@ -55,7 +55,7 @@ and require it in `server.js` and put it on the top of the file:
 const twitterConfig = require("./twitterConfig");
 ```
 
-Lastly, configure a new Twit instance with your API credentials:
+Lastly, configure a new Twit instance in `server.js` with your API credentials:
 
 ```javascript
 let Twitter = new twit({
@@ -122,7 +122,7 @@ with
             <input
             class="form-control"
             name="hashtag"
-            placeholder="eg. #100DaysOfCode"
+            placeholder="eg. #stayAtHome"
             required
             type="text"
             />
@@ -142,7 +142,7 @@ Run the following command to install it:
 
 ``npm install body-parser --save``
 
-Then, at the top of your server.js file, require it, and lastly, tell the app to utilize its power.
+Then, at the top of your `server.js` file, require it, and lastly, tell the app to utilize its power.
 
 ```javascript
 const bodyParser = require('body-parser')
@@ -155,10 +155,8 @@ Add the following JS to your server.js file which will handle a simple posting o
 
 ```javascript
 app.post('/', function (req, res) {
-  if (req.body.hashtag !== undefined) {
-    res.render('index',  {hashtag: req.body.hashtag})
-  }
-  res.render('index',  {hashtag: null})
+  const hashtag = req.body.hashtag  ? req.body.hashtag : null;
+  res.render('index',  { hashtag: hashtag })
 });
 ```
 
@@ -184,10 +182,10 @@ with
 
 ```javascript
 app.get('/', function (req, res) {
-  if (!req.body.hashtag || !req.body.twitterData) {
-      res.render('index', { hashtag: null, twitterData: null });
-  }
-  res.render('index');
+  const hashtag = req.body.hashtag ? req.body.hashtag : null;
+  const twitterData = req.body.twitterData ? req.body.twitterData : null;
+
+  res.render('index', { hashtag: hashtag, twitterData: twitterData });
 })
 ```
 
@@ -220,7 +218,7 @@ app.post('/', function (req, res) {
 
     Twitter.get('search/tweets', {
         q: req.body.hashtag, // use the user posted hashtag value as the query
-        count: 100,
+        count: 5,
         result_type: "mixed" 
 
     }).catch(function (err) {
@@ -267,7 +265,7 @@ Adjust your index.ejs file to look similar to below, which does the following:
         <fieldset>
             <form action="/" method="post">
                 <div class="input-group">
-                <input class="form-control" name="hashtag" placeholder="eg. #100DaysOfCode" required type="text">
+                <input class="form-control" name="hashtag" placeholder="eg. #stayAtHome" required type="text">
                 <input type="submit" value="Analyze!">
                 </div>
             </form>
@@ -278,13 +276,13 @@ Adjust your index.ejs file to look similar to below, which does the following:
     <div class="container-fluid">
 
     </div>
-      <% if (locals.hashtag){ %>
+      <% if (hashtag !== null){ %>
         <h3>All popular tweets for <%- hashtag %></h3>
       <% } %>
 
 <div id="tweets"></div>
 
-    <% if(locals.twitterData){ %>
+    <% if(twitterData !== null){ %>
 
     <script>
         let twitterData = <%- JSON.stringify(twitterData) %>;
