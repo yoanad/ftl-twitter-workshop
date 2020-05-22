@@ -73,13 +73,12 @@ const twit = require("twit")
 Create a `twitterConfig.js` file with the following contents:
 
 ```javascript
-const twitterConfig = {
-        consumer_key: 'your_consumer_key',
-        consumer_secret: 'your_consumer_secret',
-        access_token: 'your_access_token',
-        access_token_secret: 'your_access_token_secret',
+module.exports = {
+    consumer_key: 'your_consumer_key',
+    consumer_secret: 'your_consumer_secret',
+    access_token: 'your_access_token',
+    access_token_secret: 'your_access_token_secret',
 }
-module.exports = twitterConfig;
 ```
 
 and require it in `server.js` and put it on the top of the file:
