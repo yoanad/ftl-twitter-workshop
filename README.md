@@ -1,10 +1,39 @@
 # Workshop: View Tweets using the Twitter API
 ## Navigation
-- [1. Prerequesites](##1.%20Prerequesites)
+* [1. Prerequesites](##1.%20Prerequesites)
+
+* [2. Initial set up](##2.%20Initial%20set%20up)
+
+* [3. Installing & Configuring Twit](##3.%20Installing%20&%20Configuring%20Twit)
+
+* [4. Searching for some tweets](##4.%20Searching%20for%20some%20tweets)
+
+* [5. Adding an HTML form to the index.ejs file](##5.%20Adding%20an%20HTML%20form%20to%20the%20index.ejs%20file)
+
+* [6. Configuring our server.js to handle POST requests](##6.%20Configuring%20our%20server.js%20to%20handle%20POST%20requests)
+
+  * [6.1 Installing and configuring `body-parser`](###6.1%20Installing%20and%20configuring%20`body-parser`)
+
+  * [6.2 Adding our POST handler](###6.2%20Adding%20our%20POST%20handler)
+
+  * [6.3 Adjusting the index file to print hashtag variable passed in from the POST handler](###%206.3%20Adjusting%20the%20index%20file%20to%20print%20hashtag%20variable%20passed%20in%20from%20the%20POST%20handler)
+
+  * [6.4 Adjust your GET request](###%206.4%20Adjust%20your%20GET%20request)
+
+* [7. Putting it all together and displaying tweets](##%207.%20Putting%20it%20all%20together%20and%20displaying%20tweets)
+
+  * [7.1 Edit your server.js files POST handler](###%207.1%20Edit%20your%20server.js%20files%20POST%20handler)
+
+  * [7.2 Edit your index.ejs file to handle the Twitter Data](###%207.2%20Edit%20your%20index.ejs%20file%20to%20handle%20the%20Twitter%20Data)
+
+* [8. Summary](##%208.%20Summary)
+
+* [Confused?? We got you! ](##%20Confused??%20We%20got%20you!)
+
+* [##Next steps](##%20Next%20steps)
 
 <!-- toc -->
 
-### Example 1 Heading
 ## 1.Prerequesites 
 * Your own Twitter Developers Account (advised)
 
@@ -44,13 +73,12 @@ const twit = require("twit")
 Create a `twitterConfig.js` file with the following contents:
 
 ```javascript
-const twitterConfig = {
-        consumer_key: 'your_consumer_key',
-        consumer_secret: 'your_consumer_secret',
-        access_token: 'your_access_token',
-        access_token_secret: 'your_access_token_secret',
+module.exports = {
+    consumer_key: 'your_consumer_key',
+    consumer_secret: 'your_consumer_secret',
+    access_token: 'your_access_token',
+    access_token_secret: 'your_access_token_secret',
 }
-module.exports = twitterConfig;
 ```
 
 and require it in `server.js` and put it on the top of the file:
@@ -58,7 +86,7 @@ and require it in `server.js` and put it on the top of the file:
 const twitterConfig = require("./twitterConfig");
 ```
 
-Lastly, configure a new Twit instance with your API credentials:
+Lastly, configure a new Twit instance in `server.js` with your API credentials:
 
 ```javascript
 let Twitter = new twit({
@@ -74,6 +102,18 @@ If you don't have credentials, you need to create an app on Twitter Developer fi
 1. Navigate to `Apps` on the top right.
 2. Click on `Create new app` (top right).
 3. Fill out the required fields.
+   For *Description* you can write something like:
+
+   > I'm participating in FTL's first virtual Hackathon.
+   > We will introduce ourselves to Big Data, COVID-19 and other related datasets, and make sense of them!
+
+   For *Website URL* you can link our website for now(unless you have your own) https://bigdatahack.femaletechleaders.org/
+
+   For *Organization website URL* you can use https://femaletechleaders.org
+
+   For *App usage* you can write something like: 
+   > We want to use the API in a hackathon, in order to practice Big Data concepts and to analyze the global effects of Covid-19.
+
 4. Copy & generate `Consumer API keys` and `Access token & access token secret` to your app.
 
 ## 4. Searching for some tweets
@@ -125,7 +165,7 @@ with
             <input
             class="form-control"
             name="hashtag"
-            placeholder="eg. #100DaysOfCode"
+            placeholder="eg. #stayAtHome"
             required
             type="text"
             />
@@ -145,7 +185,7 @@ Run the following command to install it:
 
 ``npm install body-parser --save``
 
-Then, at the top of your server.js file, require it, and lastly, tell the app to utilize its power.
+Then, at the top of your `server.js` file, require it, and lastly, tell the app to utilize its power.
 
 ```javascript
 const bodyParser = require('body-parser')
@@ -158,10 +198,8 @@ Add the following JS to your server.js file which will handle a simple posting o
 
 ```javascript
 app.post('/', function (req, res) {
-  if (req.body.hashtag !== undefined) {
-    res.render('index',  {hashtag: req.body.hashtag})
-  }
-  res.render('index',  {hashtag: null})
+  const hashtag = req.body.hashtag  ? req.body.hashtag : null;
+  res.render('index',  { hashtag: hashtag })
 });
 ```
 
@@ -187,10 +225,10 @@ with
 
 ```javascript
 app.get('/', function (req, res) {
-  if (!req.body.hashtag || !req.body.twitterData) {
-      res.render('index', { hashtag: null, twitterData: null });
-  }
-  res.render('index');
+  const hashtag = req.body.hashtag ? req.body.hashtag : null;
+  const twitterData = req.body.twitterData ? req.body.twitterData : null;
+
+  res.render('index', { hashtag: hashtag, twitterData: twitterData });
 })
 ```
 
@@ -205,7 +243,7 @@ The next pieces of code will need to be completely changed if you want to build 
 
 
 ### 7.1 Edit your server.js files POST handler
-Adjust your Post handler to look the same as below, with your own API credentials:
+Adjust your Post handler to look the same as below (you can just copy it!), with your own API credentials:
 
 ```javascript
 app.post('/', function (req, res) {
@@ -223,7 +261,7 @@ app.post('/', function (req, res) {
 
     Twitter.get('search/tweets', {
         q: req.body.hashtag, // use the user posted hashtag value as the query
-        count: 100,
+        count: 5,
         result_type: "mixed" 
 
     }).catch(function (err) {
@@ -270,7 +308,7 @@ Adjust your index.ejs file to look similar to below, which does the following:
         <fieldset>
             <form action="/" method="post">
                 <div class="input-group">
-                <input class="form-control" name="hashtag" placeholder="eg. #100DaysOfCode" required type="text">
+                <input class="form-control" name="hashtag" placeholder="eg. #stayAtHome" required type="text">
                 <input type="submit" value="Analyze!">
                 </div>
             </form>
@@ -281,7 +319,7 @@ Adjust your index.ejs file to look similar to below, which does the following:
     <div class="container-fluid">
 
     </div>
-      <% if (locals.hashtag){ %>
+      <% if (hashtag !== null){ %>
         <h3>All popular tweets for <%- hashtag %></h3>
       <% } %>
 
@@ -332,3 +370,16 @@ This tutorial was designed to show you the basics of working with the Twitter AP
 ## Confused?? We got you! 
 Here's a repository with the whole setup (server + Twitter API) working:
 https://github.com/eharason/twitter-analysis 
+
+## Next steps
+Now that you can successfully display tweets on the browser, what else could you do?!
+
+- Ideas:
+  - Plot `#stayAtHome` hashtags on a map
+  - Compare hash tag sentiments by country
+  - Collection of data by a topic you are interested in
+  - Create data visualizations and reports
+
+*Feel free to ask the mentors if you have any questions!*
+
+Happy hacking!
