@@ -35,6 +35,7 @@
 <!-- toc -->
 
 ## 1.Prerequesites 
+* Git installed on your machine!
 * Your own Twitter Developers Account (advised)
 
 OR
