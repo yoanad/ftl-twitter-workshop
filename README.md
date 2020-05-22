@@ -36,6 +36,8 @@
 
 ## 1.Prerequesites 
 * Git installed on your machine!
+* NodeJS installed
+* Preferebly a Unix (Linux/macOS) operating system. Windows is fine if you have a working development setup.
 * Your own Twitter Developers Account (advised)
 
 OR
