@@ -73,7 +73,7 @@ Then, require the twit library in your server.js file by adding the following co
 const twit = require("twit")
 ```
 
-Create a `twitterConfig.js` file with the following contents:
+You can see that the `twitterConfig.js` file has the following contents:
 
 ```javascript
 module.exports = {
@@ -84,7 +84,8 @@ module.exports = {
 }
 ```
 
-and require it in `server.js` and put it on the top of the file:
+
+We have already required it in `server.js` and put it on the top of the file:
 ```javascript
 const twitterConfig = require("./twitterConfig");
 ```
@@ -242,7 +243,6 @@ Now, if you reboot your server, navigate to the index file and submit a new hash
 So, we’ve got our Twitter API client ready, the ability to post data from an HTML form, all is left to do is build the logic for the API call to include the hashtag and return data to the index file. Once that’s done, we can format the data to look good and digestible.
 
 The next pieces of code will need to be completely changed if you want to build more functionality into the project, but for now, it’s sole purpose is to handle hashtag inputs and query the Twitter API with them.
-
 
 
 ### 7.1 Edit your server.js files POST handler
