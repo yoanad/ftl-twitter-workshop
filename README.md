@@ -1,4 +1,8 @@
 # Workshop: View Tweets using the Twitter API
+Twitter API workshop, designed for Female Tech Leaders' first virtual hackathon. (Adapted from [this tutorial](https://www.codewall.co.uk/how-to-build-a-twitter-hashtag-viewing-tool-tutorial/).)
+## Workshop on Youtube
+[Part 1:] (https://www.youtube.com/watch?v=XYLDEQg3yCw&list=PLxRIXQdxuPgQHjW2lkPeLQkJEmzHJuWDy&index=5&t=0s)
+[Part 2:] (https://www.youtube.com/watch?v=G8gSp5MmJjE&list=PLxRIXQdxuPgQHjW2lkPeLQkJEmzHJuWDy&index=4&t=0s)
 ## Navigation
 * [1. Prerequesites](##1.%20Prerequesites)
 
@@ -58,7 +62,6 @@ Your server should start at localhost:3000.
 Yay! :tada: Now let's try to get some tweets.
 
 ## 3. Installing & Configuring Twit
-(Adapted from [this tutorial](https://www.codewall.co.uk/how-to-build-a-twitter-hashtag-viewing-tool-tutorial/).)
 
 First up, we need to install the beautiful Twit library which allows us to configure our API credentials and also gives us some pre-defined API functionality. Twit is a neat Twitter API client for Node and saves a boatload of time fleshing out all the code yourself.
 
